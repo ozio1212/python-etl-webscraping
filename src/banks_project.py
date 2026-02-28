@@ -89,7 +89,7 @@ def load_to_csv(df, output_path):
 
     df.to_csv(output_path, index=False)
     
-    # CORRECTION: Log progress INSIDE the function
+    
     log_progress('Data saved to CSV file')
 
 # 5. Load to Database Function
@@ -99,7 +99,7 @@ def load_to_db(df, sql_connection, table_name):
     
     df.to_sql(table_name, sql_connection, if_exists='replace', index=False)
     
-    # CORRECTION: Log progress INSIDE the function
+    
     log_progress('Data loaded to Database as table. Running the query')
 
 # 6. Run Query Function
@@ -111,12 +111,12 @@ def run_query(query_statement, sql_connection):
     query_output = pd.read_sql(query_statement, sql_connection)
     print(query_output)
     
-    # CORRECTION: Log progress INSIDE the function
+    
     log_progress(f'Query executed: {query_statement}')
 
 # --- Main Execution Block ---
 
-# CORRECTION: Removed space in URL
+
 url = 'https://web.archive.org/web/20230908091635/https://en.wikipedia.org/wiki/List_of_largest_banks'
 table_attribs = ["Name", "MC_USD_Billion"]
 db_name = 'Banks.db'
@@ -131,13 +131,13 @@ df = extract(url, table_attribs)
 log_progress('Data extraction complete. Initiating Transformation process')
 
 # 3. Transform
-# Note: Ensure exchange_rate.csv is in the same directory
+
 df = transform(df, "./exchange_rate.csv") 
 log_progress('Data transformation complete. Initiating Loading process')
 
 # 4. Load to CSV
 load_to_csv(df, csv_path)
-# Note: log_progress is now inside the function
+on
 
 # 5. SQL Connection
 sql_connection = sqlite3.connect(db_name)
@@ -145,7 +145,7 @@ log_progress('SQL Connection initiated.')
 
 # 6. Load to DB
 load_to_db(df, sql_connection, table_name)
-# Note: log_progress is now inside the function
+
 
 # 7. Run Queries
 query_statement = f"SELECT * FROM {table_name}"
